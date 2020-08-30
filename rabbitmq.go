@@ -41,7 +41,7 @@ func InitMqChannel(url string) bool {
 }
 
 //获取channel
-func GetChannel() *amqp.Channel {
+func GetSingleChannel() *amqp.Channel {
 	if amqpChannel != nil && !amqpConnection.IsClosed() {
 		return amqpChannel
 	}
@@ -59,9 +59,23 @@ func GetChannel() *amqp.Channel {
 	return amqpChannel
 }
 
+//获取channel
+func GetNewChannel() *amqp.Channel {
+	if amqpConnection == nil || amqpConnection.IsClosed() {
+		panic("队列参数尚未初始化")
+	}
+
+	channel, err := amqpConnection.Channel()
+	if err != nil {
+		panic(err)
+	}
+
+	return channel
+}
+
 //发布消息
 func Publish(message *Message) {
-	channel := GetChannel()
+	channel := GetSingleChannel()
 
 	//注入信息以便重新入队列
 	msg := wrapMessage(message.Message, message.RetryTimes, message.Exchange, message.RoutingKey)
@@ -78,9 +92,9 @@ func Publish(message *Message) {
 
 type ConsumerCallBackFunc func(msg []byte) bool
 
-//处理消息
+//处理消息,单个consumer使用go 协程，可以做简单的例子用
 func StartConsumer(queueName, consumeName string, callback ConsumerCallBackFunc) {
-	channel := GetChannel()
+	channel := GetNewChannel()
 
 	msgs, err := channel.Consume(queueName, consumeName, true, false, false, false, nil)
 	if err != nil {
@@ -109,6 +123,28 @@ func StartConsumer(queueName, consumeName string, callback ConsumerCallBackFunc)
 	}
 }
 
+//处理消息
+func AddConsumer(queueName, consumeName string, callback ConsumerCallBackFunc) *amqp.Channel {
+	channel := GetNewChannel()
+
+	msgs, err := channel.Consume(queueName, consumeName, true, false, false, false, nil)
+	if err != nil {
+		panic(err)
+	}
+
+	for msg := range msgs {
+		message := getMessage(msg.Body)
+		success := callback(message.Message)
+		if !success {
+			//给他塞回去
+			message.RetryTimes = message.RetryTimes + 1
+			Publish(message)
+		}
+	}
+
+	return channel
+}
+
 func wrapMessage(realContext []byte, retryTimes int, Exchange string, routingKey string) []byte {
 	message := Message{
 		Message:    realContext,
@@ -133,9 +169,4 @@ func getMessage(msg []byte) *Message {
 	}
 
 	return message
-}
-
-//关闭 consumer
-func CloseConsumer() {
-	done <- true
 }
