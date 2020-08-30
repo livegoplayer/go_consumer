@@ -1,0 +1,48 @@
+{
+  "app_name" : "consumers",
+
+  "log" : {
+    "access_log_file_path" : "../log",
+    "access_log_file_name" : "access.log",
+    "app_log_mysql_host": "139.224.132.234",
+    "app_log_mysql_port": "3306",
+    "app_log_mysql_db_name": "user",
+    "app_log_mysql_table_name": "us_app_log",
+    "app_log_mysql_user": "myuser",
+    "app_log_mysql_pass": "myuser"
+  },
+
+  "amqp" : {
+    "url": "amqp://guest:guest@139.224.132.234:5670/",
+    "go_user_log_consumer": {
+      "queue_name": "log.go_user",
+      "routing_key": "log_go_user",
+      "app_log_mysql_host": "139.224.132.234",
+      "app_log_mysql_port": "3306",
+      "app_log_mysql_db_name": "user",
+      "app_log_mysql_table_name": "us_app_log",
+      "app_log_mysql_user": "myuser",
+      "app_log_mysql_pass": "myuser"
+    },
+    "go_file_store_log_consumer": {
+      "queue_name": "log.go_file_store",
+      "routing_key": "log_go_file_store",
+      "app_log_mysql_host": "139.224.132.234",
+      "app_log_mysql_port": "3306",
+      "app_log_mysql_db_name": "file_store",
+      "app_log_mysql_table_name": "fs_app_log",
+      "app_log_mysql_user": "myuser",
+      "app_log_mysql_pass": "myuser"
+    },
+    "go_user_rpc_log_consumer": {
+      "queue_name": "log.go_user",
+      "routing_key": "log_go_user",
+      "app_log_mysql_host": "139.224.132.234",
+      "app_log_mysql_port": "3306",
+      "app_log_mysql_db_name": "user",
+      "app_log_mysql_table_name": "us_app_log",
+      "app_log_mysql_user": "myuser",
+      "app_log_mysql_pass": "myuser"
+    }
+  }
+}
