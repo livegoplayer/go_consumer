@@ -22,7 +22,7 @@ func testPublishMessage() {
 		panic(err)
 	}
 	//初始化，一般放在main中
-	InitMqChannel("amqp://guest:guest@139.224.132.234:5670/")
+	InitMqChannel("amqp://guest:guest@127.0.0.1:5670/")
 
 	Publish(&Message{
 		Message:    msg,
@@ -34,7 +34,7 @@ func testPublishMessage() {
 
 func testConsumeMessage() {
 	//初始化，一般放在main中
-	InitMqChannel("amqp://guest:guest@139.224.132.234:5670/")
+	InitMqChannel("amqp://guest:guest@127.0.0.1:5670/")
 
 	StartConsumer("log.go_user", "testlog", callback)
 }
