@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+    go_consumer:
+      build: ./
+      container_name: go_consumer
+      environment:
+         SERVICE_NAME: go_consumer
+         SERVICE_TAGS: go_consumer
+      volumes:
+         - ../:/apps
+         # 日志存放路径，需要同级目录创建本目录
+         - ../logs:/apps/logs
+      working_dir: /apps/go_user_rpc
+      command: ./main
+
+
