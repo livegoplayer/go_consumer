@@ -8,7 +8,7 @@ require (
 	github.com/jinzhu/gorm v1.9.16 // indirect
 	github.com/lestrrat-go/strftime v1.0.3 // indirect
 	github.com/livegoplayer/go_helper v1.0.43
-	github.com/livegoplayer/go_logger v1.0.15
+	github.com/livegoplayer/go_logger v1.0.16
 	github.com/livegoplayer/go_mq_helper v1.0.8
 	github.com/magiconair/properties v1.8.2 // indirect
 	github.com/mitchellh/mapstructure v1.3.3 // indirect

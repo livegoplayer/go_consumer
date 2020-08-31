@@ -3,9 +3,8 @@ package log
 import (
 	"encoding/json"
 	"strconv"
-	"time"
 
-	myLogger "github.com/livegoplayer/go_logger"
+	myLogger "github.com/livegoplayer/go_logger/logger"
 	"github.com/sirupsen/logrus"
 )
 
@@ -32,10 +31,9 @@ func InitGoFileStoreMysqlLogger(mysqlLogger *logrus.Logger) {
 }
 
 type LogMessage struct {
-	Message string        `json:"message"`
-	Level   logrus.Level  `json:"level"`
-	AppType int           `json:"app_type"`
-	AddTime time.Duration `json:"add_datetime"`
+	Message string       `json:"message"`
+	Level   logrus.Level `json:"level"`
+	AppType int          `json:"app_type"`
 }
 
 //打印日志方法
@@ -54,7 +52,7 @@ func Callback(msg []byte) bool {
 		return false
 	}
 
-	mysqlLogger.Log(logMessage.Level, logMessage)
+	mysqlLogger.Log(logMessage.Level, logMessage.Message)
 
 	return true
 }

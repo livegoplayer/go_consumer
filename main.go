@@ -8,7 +8,7 @@ import (
 	"github.com/spf13/viper"
 	"github.com/streadway/amqp"
 
-	myLogger "github.com/livegoplayer/go_logger"
+	myLogger "github.com/livegoplayer/go_logger/logger"
 
 	"github.com/livegoplayer/go_consumer/log"
 

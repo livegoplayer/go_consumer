@@ -190,6 +190,8 @@ github.com/livegoplayer/go_helper v1.0.43/go.mod h1:mKIhFx8cJRmxw6dBuf+wUVnehvFJ
 github.com/livegoplayer/go_logger v1.0.12/go.mod h1:w6Cv+hxj6rHeUYEQi6ijKThGs1F6JXAr2Ze3Ei/EsgM=
 github.com/livegoplayer/go_logger v1.0.15 h1:FG5G4kWOsAVGEKrQHiuF4gYDCCRzenzyutzgg2BT2U0=
 github.com/livegoplayer/go_logger v1.0.15/go.mod h1:w6Cv+hxj6rHeUYEQi6ijKThGs1F6JXAr2Ze3Ei/EsgM=
+github.com/livegoplayer/go_logger v1.0.16 h1:nWZlcDdpJ6PBNk046TXIReKZj3MsHxUuOsQ2qRhZ0X0=
+github.com/livegoplayer/go_logger v1.0.16/go.mod h1:mEFxsW9TAJj/AXiRjrHTPN6ZxebhNTDQpfrI5K8MamI=
 github.com/livegoplayer/go_mq_helper v1.0.5 h1:fY8s87hY2ZyWh45F1fcGNt479Ncb3ZHrN5ubqAbc1zU=
 github.com/livegoplayer/go_mq_helper v1.0.5/go.mod h1:DORaw9EwNJCLPDtKWvVBhhYwSzgZT8MQdKDqaZ7ybDw=
 github.com/livegoplayer/go_mq_helper v1.0.7 h1:HB3CVioMvII+Sq9Ode7bT0JXuTv9+oQ3FRN8MsL0dAk=
