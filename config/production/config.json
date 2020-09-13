@@ -13,7 +13,7 @@
   },
 
   "amqp" : {
-    "url": "amqp://guest:guest@139.224.132.234:5670/",
+    "url": "amqp://guest:guest@139.224.132.234:31001/",
     "go_user_log_consumer": {
       "queue_name": "log.go_user",
       "routing_key": "log_go_user",
