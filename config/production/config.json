@@ -35,8 +35,8 @@
       "app_log_mysql_pass": "myuser"
     },
     "go_user_rpc_log_consumer": {
-      "queue_name": "log.go_user",
-      "routing_key": "log_go_user",
+      "queue_name": "log.go_user_rpc",
+      "routing_key": "log_go_user_rpc",
       "app_log_mysql_host": "139.224.132.234",
       "app_log_mysql_port": "3306",
       "app_log_mysql_db_name": "user",
