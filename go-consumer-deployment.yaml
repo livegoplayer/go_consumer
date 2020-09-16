@@ -1,0 +1,87 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: app-sc
+reclaimPolicy: Retain
+volumeBindingMode: Immediate
+provisioner: kubernetes.io/no-provisioner
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: go-consumer-app-p-volume
+  labels:
+    type: app
+spec:
+  storageClassName: app-sc
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    path: /apps
+    server: 139.224.132.234
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: app-pvc-claim
+spec:
+  storageClassName: app-sc
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: go-consumer
+  name: go-consumer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: go-consumer
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: go-consumer
+    spec:
+      containers:
+      - args: ["./main"]
+        env:
+        - name: SERVICE_NAME
+          value: go_consumer
+        - name: SERVICE_TAGS
+          value: go_consumer,http,80
+        image: xjyplayer/go-consumer:1.0.1
+        imagePullPolicy: IfNotPresent
+        name: go-consumer
+        ports:
+        - containerPort: 80
+        resources: {}
+        volumeMounts:
+        - mountPath: /apps/go_consumer
+          subPath: go_consumer
+          name: go-consumer-pvc
+        workingDir: /apps/go_consumer
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes:
+      - name: go-consumer-pvc
+        persistentVolumeClaim:
+          claimName: app-pvc-claim
+status: {}
